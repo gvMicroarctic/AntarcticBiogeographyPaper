@@ -12,7 +12,6 @@ library(decontam)
 library(dplyr)
 library(tidyr)
 library(vegan)
-library(zetadiv)
 library(geosphere)
 
 ###############
@@ -315,7 +314,7 @@ dim(asv_filt)
 #[1] 12158     6
 
 #format metadata table
-metadata <- read.table("metadata_dt5.txt", head=T, row.names = 1)
+metadata <- read.table("metadata_dataset5.txt", head=T, row.names = 1)
 dim(metadata)
 #[1] 6 8
 retrieve <- as.vector(colnames(asv_filt))
@@ -1328,8 +1327,8 @@ dim(ps_metadata[ps_metadata$dataset == 'dt15',]) #[1] 2   8
 dim(ps_metadata[ps_metadata$dataset == 'dt14',]) #[1] 75   8
 dim(ps_metadata[ps_metadata$dataset == 'dt17',]) #[1] 53   8
 #sum
-dim(ps_metadata[ps_metadata$dataset == 'vestfold',]) #[1] 86   8
-dim(ps_metadata[ps_metadata$dataset == 'windmill',]) #[1] 60   8
+dim(ps_metadata[ps_metadata$dataset == 'dt16_vestfold',]) #[1] 86   8
+dim(ps_metadata[ps_metadata$dataset == 'dt16_windmill',]) #[1] 60   8
 
 #save(ps, file = "all_dataset_ps.RData")
 #rm(list = ls())
@@ -1369,8 +1368,8 @@ dim(ps_metadata[ps_metadata$dataset == 'dt15',]) #[1] 2   8
 dim(ps_metadata[ps_metadata$dataset == 'dt14',]) #[1] 51   8
 dim(ps_metadata[ps_metadata$dataset == 'dt17',]) #[1] 53   8
 #sum
-dim(ps_metadata[ps_metadata$dataset == 'vestfold',]) #[1] 86   8
-dim(ps_metadata[ps_metadata$dataset == 'windmill',]) #[1] 60   8
+dim(ps_metadata[ps_metadata$dataset == 'dt16_vestfold',]) #[1] 86   8
+dim(ps_metadata[ps_metadata$dataset == 'dt16_windmill',]) #[1] 60   8
 
 #get data for map
 coordinates <- data.frame(sample_data(ps_bacteria))[,c(3,4)]
@@ -1426,7 +1425,7 @@ ps_srs <- phyloseq(otu_table(asv_srs_trim, taxa_are_rows = TRUE),
                    sample_data(metadata_trim), 
                    taxa_trim, random_tree)
 
-#save(ps_srs, file = "all_dataset_ps_srs_bacteria.RData")
+#save(ps_srs, file = "all_dataset_ps_srs_bacteria0.RData")
 #rm(list = ls())
 
 ##############################
@@ -1435,7 +1434,7 @@ ps_srs <- phyloseq(otu_table(asv_srs_trim, taxa_are_rows = TRUE),
 
 setwd("/home/gilda/all")
 
-load("all_dataset_ps_srs_bacteria.RData")
+load("all_dataset_ps_srs_bacteria0.RData")
 
 library(phyloseq)
 
@@ -1454,7 +1453,7 @@ genera_and_unidentified_counts_tab <- genera_and_unidentified_counts_tab0[,colSu
 #format and save genus table
 paths <- tax_table(tax_glom(ps_srs, taxrank="Genus"))
 dim(paths)
-#[1] 1446    5
+#[1] 1445    7
 #check same order of genera
 paths[,6] == genera_tax_vec
 paths[,6] == row.names(genera_and_unidentified_counts_tab[-1,])
@@ -1506,7 +1505,7 @@ length(samples)
 genera_proportions_tab_ntw <- cbind(genera_ntw[, c(1:5)], genera_proportions_tab[,samples])
 write.csv(genera_proportions_tab_ntw, "antarctic_soil_genus_taxonomy_rel_abundance.csv")
 
-#save.image(file = "all_dataset_ps_srs_bacteria.RData")
+#save(ps_srs, genera_and_unidentified_counts_tab, genera_proportions_tab, genera_proportions_tab_hellinger, samples, file = "all_dataset_ps_srs_bacteria.RData")
 #rm(list = ls())
 
 ###############################

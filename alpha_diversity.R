@@ -20,7 +20,8 @@ min(spe)
 max(spe)
 #[1] 278
 
-metadata <- bioclim
+#import metadata
+metadata <- read.csv("bioclim_bioregion_antarctic_study_curated_final.csv", row.names = 1)[samples,]
 dim(metadata) 
 #[1] 988   20
 
@@ -34,6 +35,9 @@ anosim(spe, metadata$bioregion, distance = "eucl", permutations = 1000)
 #Get the same data for unknowns
 df_un <- as.matrix(read.csv("antarctic_soil_genus_taxonomy_rel_abundance.csv",check.names=FALSE))
 un <- df_un[,samples]
+
+length(samples)
+length(intersect(colnames(df_un), samples))
 
 #merge information
 metadata_diversity <- cbind(sim, sha, spe, as.numeric(un[1,]), metadata)
