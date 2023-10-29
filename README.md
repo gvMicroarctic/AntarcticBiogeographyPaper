@@ -24,6 +24,6 @@ The scripts used to perform all the analyses in our paper, 'Biogeographic survey
 
 - 'genera_bioclimatic_correlation.R' for figure S7
 
-RData objects and input files necessary to run the R code can be found in the folder '/data'.
+Input files necessary to run the R code can be found in the folder '/data'.
 
 For any questions, feel free to email me at gilda.varliero@wsl.ch.
